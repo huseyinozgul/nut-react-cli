@@ -1,0 +1,49 @@
+import { Action } from '../../../constants';
+import localisation from '../../../core/locale/localisation';
+import { crudOperations as baseCrudOperations } from '../../../core/api';
+
+const all = '{{models}}';
+const model = '{{model}}';
+const primaryKey = '{{primaryKey}}';
+const textField = '{{textField}}';
+const listUrl = '{{listUrl}}';
+const crudUrl = '{{crudUrl}}';
+const fields = [{{#fields}}'{{name}}',{{/fields}}];
+
+export const queryConfig = { model, primaryKey, textField, listUrl, crudUrl, fields }
+
+export const queryKeys = {
+    all: [all],
+    detail: (id) => [all, id],
+}
+
+export const mapReducer = (items) => {
+    const rawData = Array.isArray(items) ? items : [items];
+    return rawData.map(raw => ({
+        ...raw,
+        tax_type_description: localisation.current.tax_type_data.find(item => item.value === raw.tax_type)?.label,
+        tax_active_description: localisation.current.active_description(raw.tax_active)
+    }));
+}
+
+export const newRecord = () => ({ [primaryKey]: Action.NEW, tax_name: '', tax_name2: '', tax_type: 0, tax_rate: 1, tax_active: true });
+
+export const crudOperations = {
+
+    createRecord: async (data) => await baseCrudOperations.createRecord({ primaryKey, crudUrl, data }),
+
+    updateRecord: async (data) => await baseCrudOperations.updateRecord({ crudUrl, data }),
+
+    deleteRecord: async (id) => await baseCrudOperations.deleteRecord({ crudUrl, id }),
+
+    getRecord: async ({ queryKey }) => {
+        const [, id] = queryKey;
+        return await baseCrudOperations.getRecord({ id, crudUrl, newRecord, mapReducer });
+    },
+
+    getAll: async ({ queryKey }) => {
+        const [, dataState] = queryKey;
+        return await baseCrudOperations.getAll({ dataState, listUrl, mapReducer });
+    }
+
+}

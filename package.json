@@ -1,0 +1,37 @@
+{
+  "name": "nut-react-cli",
+  "version": "1.0.0",
+  "description": "React Project Cli",
+  "main": "index.js",
+  "bin": {
+    "nut-react-cli": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nutreactcli": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huseyinozgul/nut-react-cli.git"
+  },
+  "keywords": [
+    "React",
+    "ReactQuery",
+    "KendoReact"
+  ],
+  "author": "Huseyin Ozgul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huseyinozgul/nut-react-cli/issues"
+  },
+  "homepage": "https://github.com/huseyinozgul/nut-react-cli#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "clui": "^0.3.6",
+    "figlet": "^1.5.2",
+    "inquirer": "^8.1.2",
+    "minimist": "^1.2.5",
+    "mustache": "^4.2.0"
+  }
+}
