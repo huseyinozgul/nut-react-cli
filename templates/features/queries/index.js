@@ -1,5 +1,5 @@
-import { Action } from '../../../constants';
-import localisation from '../../../core/locale/localisation';
+module.exports = 
+`import { Action } from '../../../constants';
 import { crudOperations as baseCrudOperations } from '../../../core/api';
 
 const all = '{{models}}';
@@ -8,7 +8,7 @@ const primaryKey = '{{primaryKey}}';
 const textField = '{{textField}}';
 const listUrl = '{{listUrl}}';
 const crudUrl = '{{crudUrl}}';
-const fields = [{{#fields}}'{{name}}',{{/fields}}];
+const fields = [{{#each fields}}'{{fieldName}}',{{/each}}];
 
 export const queryConfig = { model, primaryKey, textField, listUrl, crudUrl, fields }
 
@@ -20,13 +20,16 @@ export const queryKeys = {
 export const mapReducer = (items) => {
     const rawData = Array.isArray(items) ? items : [items];
     return rawData.map(raw => ({
-        ...raw,
-        tax_type_description: localisation.current.tax_type_data.find(item => item.value === raw.tax_type)?.label,
-        tax_active_description: localisation.current.active_description(raw.tax_active)
+        ...raw
+        // map type fields
     }));
 }
 
-export const newRecord = () => ({ [primaryKey]: Action.NEW, tax_name: '', tax_name2: '', tax_type: 0, tax_rate: 1, tax_active: true });
+export const newRecord = () => ({ 
+    {{#each fields}}
+        {{{fieldByType .}}},
+    {{/each}}
+});
 
 export const crudOperations = {
 
@@ -45,5 +48,5 @@ export const crudOperations = {
         const [, dataState] = queryKey;
         return await baseCrudOperations.getAll({ dataState, listUrl, mapReducer });
     }
-
 }
+`

@@ -1,11 +1,12 @@
-import { useMutation, useQueryClient } from 'react-query';
+module.exports =
+`import { useMutation, useQueryClient } from 'react-query';
 import { queryConfig, queryKeys, crudOperations } from '../queries';
 import { useNotification } from '../../../core/notification';
 import localisation from '../../../core/locale/localisation';
 
 const { primaryKey } = queryConfig;
 
-export default function useDelete{{Component}}() {
+export default function useDelete{{{form}}}() {
     const { notifySuccess, notifyError } = useNotification();
     const queryClient = useQueryClient();
 
@@ -33,3 +34,4 @@ export default function useDelete{{Component}}() {
 
     });
 }
+`

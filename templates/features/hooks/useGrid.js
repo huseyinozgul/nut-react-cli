@@ -1,11 +1,12 @@
-import { useQuery, useQueryClient } from 'react-query';
+module.exports=
+`import { useQuery, useQueryClient } from 'react-query';
 
 import { useNotification } from '../../../core/notification';
 import { queryKeys, queryConfig, crudOperations } from '../queries';
 
 const { primaryKey } = queryConfig;
 
-export default function use{{Components}}(dataState) {
+export default function use{{{grid}}}(dataState) {
     const { notifyError } = useNotification();
     const queryClient = useQueryClient();
 
@@ -23,3 +24,4 @@ export default function use{{Components}}(dataState) {
             }
         });
 }
+`

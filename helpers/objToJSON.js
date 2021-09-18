@@ -1,0 +1,1 @@
+module.exports = (obj) => `{\n${Object.entries(obj).map(([key, value]) => (`\t${key}:${typeof value==='function'?value.toString():JSON.stringify(value)}`)).join(',\n')}\n}`;

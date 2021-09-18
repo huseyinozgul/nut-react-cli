@@ -1,9 +1,10 @@
-import { useQueryClient, useMutation } from 'react-query';
+module.exports =
+`import { useQueryClient, useMutation } from 'react-query';
 import { queryKeys, mapReducer, crudOperations } from '../queries';
 import localisation from '../../../core/locale/localisation';
 import { useNotification } from '../../../core/notification';
 
-export default function useCreate{{Component}}() {
+export default function useCreate{{{form}}}() {
     const { notifySuccess, notifyError } = useNotification();
     const queryClient = useQueryClient();
 
@@ -30,3 +31,4 @@ export default function useCreate{{Component}}() {
         }
     });
 }
+`

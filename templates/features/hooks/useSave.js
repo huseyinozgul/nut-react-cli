@@ -1,11 +1,12 @@
-import { useQueryClient, useMutation } from 'react-query';
+module.exports =
+`import { useQueryClient, useMutation } from 'react-query';
 import { queryKeys, queryConfig, crudOperations } from '../queries';
 import { useNotification } from '../../../core/notification';
 import localisation from '../../../core/locale/localisation';
 
 const { primaryKey } = queryConfig;
 
-export default function useSave{{Component}}() {
+export default function useSave{{{form}}}() {
 
     const { notifySuccess, notifyError } = useNotification();
     const queryClient = useQueryClient();
@@ -31,3 +32,4 @@ export default function useSave{{Component}}() {
 
     });
 }
+`

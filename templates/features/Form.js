@@ -1,25 +1,30 @@
-import React, { useRef } from 'react';
+module.exports =
+    `import React, { useRef } from 'react';
 import { Dialog } from "@progress/kendo-react-dialogs";
 import { Form, Field, FormElement } from '@progress/kendo-react-form';
 
-import { FormInput, FormNumericTextBox, FormMultiFieldContainer, FormRadioGroup, FormCheckbox, FormComboBoxRemoteData } from '../../components/formcomponents';
+import { 
+    {{#each fields}}
+        {{{getFormComponentName .}}}
+    {{/each}}
+} from '../../components/formcomponents';
 import { DialogButtonsContainer, NewButton, SaveButton } from '../../components/Buttons';
 import localisation from '../../core/locale/localisation';
 import { Action } from '../../constants';
 import { useWindows } from '../../controllers/windows';
 import { ReturnValueTypes } from '../../components/formcomponents/FormComboBoxRemoteData';
-import use{{Component}} from './hooks/use{{Component}}';
+import use{{{form}}} from './hooks/use{{{form}}}';
 import { queryConfig, newRecord } from './queries';
-import useSave{{Component}} from './hooks/useSave{{Component}}';
-import useCreate{{Component}} from './hooks/useCreate{{Component}}';
+import useSave{{{form}}} from './hooks/useSave{{{form}}}';
+import useCreate{{{form}}} from './hooks/useCreate{{{form}}}';
 
 const formValidator = (values) => {
     const result = {};
     
-    {{#fields}}
-        if (!values.{{name}})
-            result.{{name}} = localisation.current.validation_required;
-    {{/fields}}
+    {{#each fields}}
+        if (!values.{{fieldName}})
+            result.{{fieldName}} = localisation.current.validation_required;
+    {{/each}}
 
     const validation = Object.keys(result).length > 0 ? { VALIDATION_SUMMARY: localisation.current.validation_summary, ...result } : result;
 
@@ -28,11 +33,11 @@ const formValidator = (values) => {
 
 const { primaryKey, textField, listUrl, fields } = queryConfig;
 
-const {{Component}} = (props) => {
+const {{{form}}} = (props) => {
     const ref = useRef();
-    const { data } = use{{Component}}(props.recordId);
-    const { mutate: saveRecord } = useSave{{Component}}();
-    const { mutate: createRecord } = useCreate{{Component}}();
+    const { data } = use{{{form}}}(props.recordId);
+    const { mutate: saveRecord } = useSave{{{form}}}();
+    const { mutate: createRecord } = useCreate{{{form}}}();
 
     const { onClose } = useWindows();
 
@@ -68,7 +73,7 @@ const {{Component}} = (props) => {
         return null;
     }
 
-    const title = data[primaryKey] === Action.NEW ? `${localisation.current.new} ${localisation.current.{{model}}}` : data && data[textField];
+    const title = data[primaryKey] === Action.NEW ? localisation.current.new+' '+localisation.current.{{form}} : data && data[textField];
 
     return (
         <Dialog id={props.id} title={title} onClose={onClose} width={720}>
@@ -79,9 +84,9 @@ const {{Component}} = (props) => {
                 validator={formValidator}
                 render={(formRenderProps) => (
                     <FormElement>
-                        {{#fields}}
-                            {{component}}
-                        {{/fields}}
+                        {{#each fields}}
+                            {{{getFormComponent .}}}
+                        {{/each}}
                         <DialogButtonsContainer>
                             <SaveButton disabled={!formRenderProps.allowSubmit} />
                             <NewButton onClick={formRenderProps.onFormReset} />
@@ -93,4 +98,5 @@ const {{Component}} = (props) => {
     );
 }
 
-export default {{Component}};
+export default {{{form}}};
+`

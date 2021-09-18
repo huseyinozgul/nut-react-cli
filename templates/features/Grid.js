@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+module.exports=
+`import React, { useState } from 'react';
 import { GridColumn as Column } from '@progress/kendo-react-grid';
 import { Button } from '@progress/kendo-react-buttons';
 import { CommandCell, GridLoadingPanel, PageHeader, Grid, BooleanCell } from '../../components';
@@ -13,17 +14,17 @@ import { usePermissions } from '../../core/auth';
 import { useWindows } from '../../controllers/windows';
 
 import { queryConfig } from './queries';
-import use{{Components}} from './hooks/use{{Components}}';
-import useDelete{{Component}} from './hooks/useDelete{{Component}}';
+import use{{grid}} from './hooks/use{{grid}}';
+import useDelete{{form}} from './hooks/useDelete{{form}}';
 
 const { primaryKey, model, textField } = queryConfig;
 const initialState = Object.assign(DefaultDataState, { sort: [{ field: textField, dir: "asc" }] });
 
-const {{Components}} = () => {
+const {{grid}} = () => {
     const [dataState, setDataState] = useState(initialState);
 
-    const { data, isLoading, refetch } = use{{Components}}(dataState);
-    const { mutate: deleteRecord } = useDelete{{Component}}();
+    const { data, isLoading, refetch } = use{{grid}}(dataState);
+    const { mutate: deleteRecord } = useDelete{{form}}();
 
     const rights = usePermissions(model);
 
@@ -52,7 +53,7 @@ const {{Components}} = () => {
 
     return (
         <div className='p-2'>
-            <PageHeader text={localisation.{{models}} }>
+            <PageHeader text={localisation.{{grid}} }>
                 {rights && rights.canCreate && <NewButton onClick={onNew} />}
                 &nbsp;
                 <RefreshButton onClick={onRefresh} />
@@ -65,9 +66,9 @@ const {{Components}} = () => {
                 onRowDoubleClick={e => rights.canUpdate && onEdit(e.dataItem)}
             >
                 {/* <Column field={primaryKey} title="ID" width="120px" /> */}
-                {{#fields}}
-                    <Column field="{{name}}" width="170px" title={localisation.{{name}}} groupable />
-                {{/fields}}                
+                {{#each fields}}
+                    {{getGridColumn .}}
+                {{/each}}                
                 <Column locked title={localisation.actions} width="80px" filterable={false} sortable={false} columnMenu={null} cell={props => (
                     <CommandCell {...props}>
                         {rights.canDelete && <Button primary={true} look="outline" onClick={() => onDelete(props.dataItem)}>{localisation.delete}</Button>}
@@ -79,4 +80,5 @@ const {{Components}} = () => {
     );
 }
 
-export default {{Components}};
+export default {{grid}};
+`
