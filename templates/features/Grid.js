@@ -19,7 +19,7 @@ import use{{grid}} from './hooks/use{{grid}}';
 import useDelete{{form}} from './hooks/useDelete{{form}}';
 
 const { primaryKey, model, textField } = queryConfig;
-const initialState = Object.assign(DefaultDataState, { sort: [{ field: textField, dir: "asc" }] });
+const initialState = Object.assign({ ...DefaultDataState }, { sort: [{ field: textField, dir: "asc" }] });
 
 const {{grid}} = () => {
     const [dataState, setDataState] = useState(initialState);

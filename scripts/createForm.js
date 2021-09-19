@@ -42,7 +42,7 @@ module.exports = async (config) => {
     const directoryPath = path.join(process.cwd(), `src/features/${capitalizeFirstLetter(config.model)}`);
     const fullFilePath = path.join(directoryPath, `${config.form}.js`);
 
-    const fileContent = prettier.format(template(config), { semi: false, useTabs: true, tabWidth: 4, parser: "babel" });
+    const fileContent = prettier.format(template(config), { semi: true, useTabs: true, tabWidth: 4, parser: "babel" });
 
     if (!fs.existsSync(directoryPath)) {
         fs.mkdirSync(directoryPath, { recursive: true });
