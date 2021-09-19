@@ -2,7 +2,8 @@ module.exports=
 `import React, { useState } from 'react';
 import { GridColumn as Column } from '@progress/kendo-react-grid';
 import { Button } from '@progress/kendo-react-buttons';
-import { CommandCell, GridLoadingPanel, PageHeader, Grid, BooleanCell } from '../../components';
+import { CommandCell, GridLoadingPanel, PageHeader, Grid, {{#each fields}}{{{getGridColumnComponent .}}}{{/each}} } from '../../components';
+
 import { NewButton, RefreshButton } from '../../components/Buttons';
 
 import { DefaultDataState } from '../../constants/config';
@@ -65,9 +66,8 @@ const {{grid}} = () => {
                 onDataStateChange={onDataStateChange}
                 onRowDoubleClick={e => rights.canUpdate && onEdit(e.dataItem)}
             >
-                {/* <Column field={primaryKey} title="ID" width="120px" /> */}
                 {{#each fields}}
-                    {{getGridColumn .}}
+                    {{{getGridColumn .}}}
                 {{/each}}                
                 <Column locked title={localisation.actions} width="80px" filterable={false} sortable={false} columnMenu={null} cell={props => (
                     <CommandCell {...props}>

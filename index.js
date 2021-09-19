@@ -20,7 +20,8 @@ console.log(
 );
 
 const run = async () => {
-  let config = {
+  let config = 
+  {
     model: 'category',
     models: 'categories',
     listUrl: '/categories',
@@ -31,8 +32,6 @@ const run = async () => {
     grid: 'Categories',
     grid_en: 'Categories',
     grid_tr: 'Kategoriler',
-    primaryKey: 'cat_id',
-    textField: 'cat_name',
     fields: [
       {
         fieldName: 'cat_id',
@@ -113,9 +112,9 @@ const run = async () => {
   await createHooks(config);
   await createQueries(config);
   await createForm(config);
-  // await createComponents(config);
+  await createGrid(config);
 
-  console.log('Completed.', config);
+  console.log('Completed.');
 }
 
 

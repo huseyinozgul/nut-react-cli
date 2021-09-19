@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
 const prettier = require('prettier');
+const { capitalizeFirstLetter } = require('../helpers/stringHelpers');
 
 const template = Handlebars.compile(require('../templates/features/Form'));
 
@@ -38,7 +39,7 @@ Handlebars.registerHelper('getFormComponent', function (field) {
 
 module.exports = async (config) => {
 
-    const directoryPath = path.join(process.cwd(), `src/features`);
+    const directoryPath = path.join(process.cwd(), `src/features/${capitalizeFirstLetter(config.model)}`);
     const fullFilePath = path.join(directoryPath, `${config.form}.js`);
 
     const fileContent = prettier.format(template(config), { semi: false, useTabs: true, tabWidth: 4, parser: "babel" });
