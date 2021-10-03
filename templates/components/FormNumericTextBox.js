@@ -3,5 +3,5 @@ module.exports =
 name='{{fieldName}}'
 label={localisation.current.{{fieldName}} }
 component={FormNumericTextBox}
-min={1}
+format="n"
 />`

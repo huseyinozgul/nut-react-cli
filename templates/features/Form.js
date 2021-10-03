@@ -41,12 +41,12 @@ const {{{form}}} = (props) => {
 
     const { onClose } = useWindows();
 
-    const onSubmit = (formData) => {
-        if (formData[primaryKey] === Action.NEW)
-            createRecord(formData);
-        else
-            saveRecord(formData);
-
+    if (formData[primaryKey] === Action.NEW) {
+        await createRecord(formData);
+        ref.current.resetForm();
+    }
+    else {
+        await saveRecord(formData);
         ref.current.resetForm();
     }
 

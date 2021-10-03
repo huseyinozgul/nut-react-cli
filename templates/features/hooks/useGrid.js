@@ -14,6 +14,7 @@ export default function use{{{grid}}}(dataState) {
         [...queryKeys.all, dataState],
         crudOperations.getAll,
         {
+            retry: false,
             onSuccess: (data) => {
                 data.data.forEach(item => {
                     queryClient.setQueryData(queryKeys.detail(item[primaryKey]), item);
